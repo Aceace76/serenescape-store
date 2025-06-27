@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SereneScape - Your Personal Universe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- Base & Typography --- */
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #0d1222; /* Deep, soft navy blue */
+            color: #dbe1e8; /* Soft off-white for text */
+        }
+        .hero-gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Background Effects --- */
+        .hero-bg-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .hero-bg-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fade-in-out 18s infinite;
+        }
+        /* FIXED IMAGE LINKS */
+        .hero-bg-slide:nth-child(1) { background-image: url('https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); }
+        .hero-bg-slide:nth-child(2) { background-image: url('https://images.pexels.com/photos/998641/pexels-photo-998641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); animation-delay: 6s; }
+        .hero-bg-slide:nth-child(3) { background-image: url('https://images.pexels.com/photos/32237/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); animation-delay: 12s; }
+        .hero-bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(13, 18, 34, 0.6);
+        }
+
+        /* --- Animations --- */
+        @keyframes fade-in-out {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            33% { opacity: 1; }
+            43% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        .reveal {
+            position: relative;
+            opacity: 0;
+            transform: translateY(80px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Components --- */
+        .cta-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+        }
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.6);
+        }
+        .glass-card {
+            background: rgba(13, 18, 34, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .upload-button {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .upload-button:hover {
+            background-color: rgba(56, 189, 248, 0.8);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- =================================================================== -->
+    <!-- HEADER                                                              -->
+    <!-- =================================================================== -->
+    <header class="bg-[#0d1222]/60 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3">
+                    <svg class="h-8 w-8 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+                    <span class="text-3xl font-bold text-white">SereneScape</span>
+                </div>
+                <a href="#buy-now" class="cta-button bg-sky-500 text-white px-6 py-3 rounded-lg font-semibold hidden sm:block">
+                    Buy Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- =================================================================== -->
+        <!-- HERO SECTION                                                        -->
+        <!-- =================================================================== -->
+        <section class="relative min-h-[85vh] flex items-center justify-center text-center text-white pt-16 pb-20 px-4">
+            <div class="hero-bg-slideshow" id="hero-slideshow">
+                <div class="hero-bg-slide"></div>
+                <div class="hero-bg-slide"></div>
+                <div class="hero-bg-slide"></div>
+                <div class="hero-bg-overlay"></div>
+            </div>
+            <div class="relative z-10">
+                <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight">Escape Into Your Personal Universe.</h1>
+                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">Stressful days melt away under a canopy of drifting stars and nebula clouds. The SereneScape Projector turns any room into a tranquil, cosmic sanctuary.</p>
+                <div class="mt-10">
+                    <a href="#buy-now" class="cta-button inline-block bg-sky-500 text-white px-12 py-4 rounded-lg font-bold text-lg">
+                        Create Your Escape
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- PRODUCT SHOWCASE SECTION                                            -->
+        <!-- =================================================================== -->
+        <section class="py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="relative">
+                        <img id="main-product-image" src="https://images.pexels.com/photos/16380962/pexels-photo-16380962/free-photo-of-a-starry-sky-projector-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="SereneScape Astronaut Galaxy Projector" class="rounded-2xl shadow-2xl">
+                        <label for="main-product-upload" class="upload-button">Change Image</label>
+                        <input type="file" id="main-product-upload" class="hidden" accept="image/*">
+                    </div>
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold hero-gradient-text leading-tight">Designed for Tranquility.</h2>
+                        <!-- UPDATED DESCRIPTION -->
+                        <p class="mt-4 text-lg text-gray-300">Watch a drifting nebula and thousands of shimmering stars float across your ceiling. The SereneScape projector instantly transforms your room into a tranquil haven, perfect for winding down after a long day, setting a romantic mood, or creating a magical space for your kids.</p>
+                        <ul class="mt-8 space-y-4 text-lg">
+                            <li class="flex items-start"><svg class="h-6 w-6 text-sky-400 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span><span class="font-bold">8 Immersive Nebula Modes:</span> Find your perfect vibe, from a gentle starfield to a vibrant deep-space nebula.</span></li>
+                            <li class="flex items-start"><svg class="h-6 w-6 text-sky-400 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span><span class="font-bold">Whisper-Quiet Operation:</span> Enjoy the stunning visuals without any distracting motor noise.</span></li>
+                            <!-- UPDATED BULLET POINT -->
+                            <li class="flex items-start"><svg class="h-6 w-6 text-sky-400 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span><span class="font-bold">Adjustable Head & Timer:</span> Point the 360° rotating head anywhere and set an auto-off timer for worry-free sleep.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- =================================================================== -->
+        <!-- EYE COMFORT SECTION                                                 -->
+        <!-- =================================================================== -->
+        <section class="py-20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+                <svg class="mx-auto h-16 w-16 text-sky-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /> <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> </svg>
+                <h2 class="mt-4 text-3xl md:text-4xl font-bold text-white">Gentle on Your Eyes</h2>
+                <p class="mt-4 text-lg text-gray-300">We engineered SereneScape to be a comfortable, immersive experience. The soft, non-flickering LED light and adjustable brightness create a calming ambiance that won't strain your eyes, making it perfect for winding down before bed.</p>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TESTIMONIALS SECTION                                                -->
+        <!-- =================================================================== -->
+        <section class="py-20">
+             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl font-bold text-white">Loved by Thousands of Dreamers</h2>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 rounded-2xl relative">
+                        <img id="testimonial-image-1" src="https://images.pexels.com/photos/16381014/pexels-photo-16381014/free-photo-of-a-room-with-a-projector-on-the-wall.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Galaxy projection in a bedroom" class="rounded-lg mb-4">
+                        <p class="text-gray-300">"This is the best purchase I've made all year. My bedroom feels like a different world. It helps me fall asleep so much faster."</p>
+                        <p class="mt-4 font-bold text-white">- Jessica L.</p>
+                        <label for="testimonial-upload-1" class="upload-button">Change Image</label>
+                        <input type="file" id="testimonial-upload-1" class="hidden" accept="image/*">
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl relative">
+                         <img id="testimonial-image-2" src="https://images.pexels.com/photos/16381013/pexels-photo-16381013/free-photo-of-a-man-in-a-dark-room-with-a-galaxy-projector.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Galaxy projection in a child's room" class="rounded-lg mb-4">
+                        <p class="text-gray-300">"I got this for my son's room and he is obsessed. No more fighting at bedtime! The quality is amazing for the price."</p>
+                        <p class="mt-4 font-bold text-white">- Mark D.</p>
+                        <label for="testimonial-upload-2" class="upload-button">Change Image</label>
+                        <input type="file" id="testimonial-upload-2" class="hidden" accept="image/*">
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl relative">
+                         <img id="testimonial-image-3" src="https://images.pexels.com/photos/7994646/pexels-photo-7994646.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Galaxy projection in a living room" class="rounded-lg mb-4">
+                        <p class="text-gray-300">"It completely transforms my living room for movie nights. The adjustable head is perfect for getting the angle just right."</p>
+                        <p class="mt-4 font-bold text-white">- Chloe A.</p>
+                        <label for="testimonial-upload-3" class="upload-button">Change Image</label>
+                        <input type="file" id="testimonial-upload-3" class="hidden" accept="image/*">
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- CALL TO ACTION (BUY NOW) SECTION                                    -->
+        <!-- =================================================================== -->
+        <section id="buy-now" class="py-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+                <h2 class="text-3xl md:text-5xl font-extrabold hero-gradient-text">Your Escape is One Click Away.</h2>
+                <p class="my-6 text-lg text-gray-300 max-w-2xl mx-auto">Get the SereneScape projector today and create your own pocket of peace. Limited stock available due to viral demand!</p>
+                
+                <div class="glass-card rounded-2xl shadow-2xl p-8 max-w-md mx-auto border-sky-400/30">
+                    <h3 class="text-2xl font-bold text-white">SereneScape™ Projector</h3>
+                    <div class="my-4 flex items-baseline justify-center space-x-3">
+                        <span class="text-5xl font-bold text-sky-400">$49.99</span>
+                        <span class="text-2xl text-gray-500 line-through">$99.99</span>
+                    </div>
+                    <p class="font-semibold text-green-400 mb-6">Today's Deal: 50% OFF + Free Shipping!</p>
+                    
+                    <button id="checkout-button" class="cta-button w-full bg-sky-500 text-white py-4 rounded-lg font-bold text-xl">
+                        Order My Projector Now
+                    </button>
+                    <p class="mt-4 text-xs text-gray-400">Secure Payment via Stripe. 30-Day Money-Back Guarantee.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- =================================================================== -->
+    <!-- FOOTER                                                                -->
+    <!-- =================================================================== -->
+    <footer class="bg-[#0d1222] border-t border-gray-800 text-gray-500 py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 SereneScape. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- =================================================================== -->
+    <!-- JAVASCRIPT & LOGIC                                                    -->
+    <!-- =================================================================== -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- MODULE 1: Reveal on Scroll ---
+            const setupScrollReveal = () => {
+                const revealElements = document.querySelectorAll(".reveal");
+                const reveal = () => {
+                    for (let i = 0; i < revealElements.length; i++) {
+                        const windowHeight = window.innerHeight;
+                        const elementTop = revealElements[i].getBoundingClientRect().top;
+                        const elementVisible = 100;
+                        if (elementTop < windowHeight - elementVisible) {
+                            revealElements[i].classList.add("active");
+                        }
+                    }
+                };
+                window.addEventListener("scroll", reveal);
+                reveal();
+            };
+
+            // --- MODULE 2: Image Uploader ---
+            const setupImageUploader = () => {
+                const handleImageUpload = (inputId, imageId) => {
+                    const uploadInput = document.getElementById(inputId);
+                    const imageElement = document.getElementById(imageId);
+                    
+                    if (uploadInput && imageElement) {
+                        uploadInput.addEventListener('change', (event) => {
+                            const file = event.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    imageElement.src = e.target.result;
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    }
+                };
+
+                handleImageUpload('main-product-upload', 'main-product-image');
+                handleImageUpload('testimonial-upload-1', 'testimonial-image-1');
+                handleImageUpload('testimonial-upload-2', 'testimonial-image-2');
+                handleImageUpload('testimonial-upload-3', 'testimonial-image-3');
+            };
+
+            // --- MODULE 3: Stripe Payment ---
+            const setupStripe = () => {
+                const PUBLISHABLE_KEY = 'pk_test_51ReUmiCsyp9KpY8PRWHRWrZO2aFk72I4soy7FhSgGzwzUUOWUm4IQvQVeIrCgU5hBz8oNt3uhKqxkAamKJNSILb500SncIjArg';
+                const PRICE_ID = 'price_1ReW5mCsyp9KpY8PuZ5uXW5c';
+
+                if (!PUBLISHABLE_KEY || !PUBLISHABLE_KEY.startsWith('pk_')) {
+                    console.error("Stripe key is not set or invalid.");
+                    return;
+                }
+
+                const stripe = Stripe(PUBLISHABLE_KEY);
+                const checkoutButton = document.getElementById('checkout-button');
+
+                if (checkoutButton) {
+                    checkoutButton.addEventListener('click', () => {
+                        if (PRICE_ID === 'price_REPLACE_WITH_YOUR_PRICE_ID' || !PRICE_ID) {
+                            alert('Store owner: Stripe Price ID is not configured.');
+                            return;
+                        }
+                        
+                        stripe.redirectToCheckout({
+                            lineItems: [{ price: PRICE_ID, quantity: 1 }],
+                            mode: 'payment',
+                            successUrl: `${window.location.protocol}//${window.location.host}?payment=success`,
+                            cancelUrl: window.location.href,
+                        }).then((result) => {
+                            if (result.error) {
+                                alert(result.error.message);
+                            }
+                        });
+                    });
+                }
+
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('payment') === 'success') {
+                    alert('Payment successful! Thank you for your order.');
+                    window.history.replaceState(null, null, window.location.pathname);
+                }
+            };
+            
+            // Initialize all modules
+            setupScrollReveal();
+            setupImageUploader();
+            setupStripe();
+        });
+    </script>
+</body>
+</html>
