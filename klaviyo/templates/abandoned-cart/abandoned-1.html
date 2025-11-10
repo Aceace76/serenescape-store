@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Glow is Flickering...</title>
+  <style>
+    body { margin:0; background:#0B1220; color:#F5F7FA; font-family:'Lora',Georgia,serif; }
+    .wrapper { max-width:600px; margin:0 auto; padding:36px 20px; }
+    .card { background:#111827; border:2px solid rgba(255,46,87,0.4); border-radius:24px; padding:32px; }
+    h1 { font-family:'Bangers',cursive; color:#FF2E57; font-size:38px; margin:0 0 16px; }
+    .cta { display:inline-block; border-radius:999px; padding:14px 32px; background:#FFD700; color:#1A1A1A; text-decoration:none; font-family:'Bangers',cursive; margin-top:24px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <h1>Your cart lights are still on 🔔</h1>
+      <p>{{ organization.name }} saved your glow. The elves noticed you left <strong>{{ event.extra.line_items.0.product.title }}</strong> waiting for a home.</p>
+      <p>Checkout in the next 12 hours and we’ll toss in free Glow Wrap. Miss it and the waiting list elves take over.</p>
+      <a class="cta" href="{{ event.extra.checkout_url }}">Return to my Glow</a>
+    </div>
+  </div>
+</body>
+</html>

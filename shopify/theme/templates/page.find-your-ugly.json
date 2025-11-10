@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "uglyglow-quiz",
+      "settings": {
+        "heading": "Find Your Ugly",
+        "subheading": "Answer three cheeky questions and we\'ll spill your signature glow.",
+        "collection_link": "shopify://collections/ugly-sweaters"
+      }
+    }
+  },
+  "order": ["main"]
+}

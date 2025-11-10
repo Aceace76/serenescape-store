@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "rich-text",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": false
+      },
+      "blocks": {
+        "heading": {"type": "heading", "settings": {"heading": "Shipping & Glow Returns"}},
+        "text": {"type": "text", "settings": {"text": "We ship worldwide from Printful\'s US + EU hubs. Pre-order sweaters knit in 7 business days, with delivery windows of 3-5 days (US) and 5-10 days (EU)."}},
+        "list": {"type": "text", "settings": {"text": "<ul><li>US: UPS Ground, DHL eCommerce. Free over $75.</li><li>Canada: Tracked postal service, duties calculated at checkout.</li><li>EU/UK: Localized printing via Riga & Barcelona hubs for zero customs surprises.</li></ul>"}},
+        "returns": {"type": "text", "settings": {"text": "Returns: 60-day window, free exchanges, prepaid labels in US. Email support@uglyglow.com for international assistance."}}
+      },
+      "block_order": ["heading","text","list","returns"]
+    }
+  },
+  "order": ["main"]
+}

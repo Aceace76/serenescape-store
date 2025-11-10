@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {"type": "heading", "settings": {"heading": "From Hallmark Dreams to Glow Streams"}},
+        "text": {"type": "text", "settings": {"text": "UglyGlow™ was stitched together by a team of knit-obsessed creatives who believe the holidays should sparkle with equal parts nostalgia and mischief."}},
+        "button": {"type": "buttons", "settings": {"button_label_1": "Meet the makers", "button_link_1": "shopify://pages/contact"}}
+      },
+      "block_order": ["heading","text","button"],
+      "settings": {"color_scheme": "background-2", "full_width": false}
+    },
+    "timeline": {
+      "type": "collapsible-content",
+      "blocks": {
+        "b1": {"type": "collapsible_tab", "settings": {"heading": "2009: The first ugly office party", "content": "Our founder Jess bedazzled a thrifted sweater with battery-powered lights. Viral chaos ensued."}},
+        "b2": {"type": "collapsible_tab", "settings": {"heading": "2016: International glow", "content": "We partnered with EU factories for responsible production."}},
+        "b3": {"type": "collapsible_tab", "settings": {"heading": "2024: UglyGlow is born", "content": "New brand, same mission: maximal joy with premium knits."}}
+      },
+      "block_order": ["b1","b2","b3"],
+      "settings": {"color_scheme": "background-3"}
+    }
+  },
+  "order": ["main","timeline"]
+}

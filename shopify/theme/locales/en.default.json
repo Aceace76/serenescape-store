@@ -1,0 +1,33 @@
+{
+  "general": {
+    "accessibility": {
+      "close": "Close",
+      "skip_to_content": "Skip to UglyGlow content"
+    },
+    "popup": {
+      "newsletter_heading": "Join the Glow Club",
+      "newsletter_body": "Unlock the Golden Bell restock list and a 15% welcome glow."
+    }
+  },
+  "sections": {
+    "featured_collection": {
+      "more_link": "View all glow-ups"
+    },
+    "product": {
+      "low_stock": "Only {{ count }} sweaters glowing!",
+      "unit_price_label": "Glow unit price"
+    },
+    "cart": {
+      "upsell_heading": "Complete your glow",
+      "gift_wrap": "Add Glow Wrap for $6.99",
+      "matching_mug": "Matching mug for $16.99"
+    }
+  },
+  "checkout": {
+    "express_buttons": "Glow faster with Shop Pay, Apple Pay, or Afterpay",
+    "thank_you": {
+      "title": "Your glow is on the way!",
+      "next_steps": "Watch for our UglyGlow Thank-You email with care tips and LED recharge guide."
+    }
+  }
+}

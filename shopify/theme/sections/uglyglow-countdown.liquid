@@ -1,0 +1,107 @@
+<section class="uglyglow-countdown" data-section-id="{{ section.id }}">
+  <div class="uglyglow-countdown__inner">
+    <h2 class="uglyglow-countdown__heading">{{ section.settings.heading }}</h2>
+    <p class="uglyglow-countdown__copy">{{ section.settings.body }}</p>
+    <div class="uglyglow-countdown__timer" data-deadline="{{ section.settings.deadline | escape }}"></div>
+    <div class="uglyglow-countdown__cta">
+      <a href="{{ section.settings.cta_link }}" class="button button--primary">{{ section.settings.cta_label }}</a>
+      <span class="uglyglow-countdown__subtext">{{ section.settings.subtext }}</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "UglyGlow Countdown",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "12 Days of Ugly begins soon" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Drop alerts, VIP-only neon bundles, and ugly sweater roulette go live in our Glow Club." },
+    { "type": "text", "id": "deadline", "label": "Deadline ISO timestamp", "default": "2025-11-24T17:00:00-05:00" },
+    { "type": "url", "id": "cta_link", "label": "CTA link", "default": "shopify://pages/quiz-find-your-ugly" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Reserve Your Slot" },
+    { "type": "text", "id": "subtext", "label": "Subtext", "default": "Limited to 500 early birds." }
+  ],
+  "presets": [
+    { "name": "UglyGlow Countdown" }
+  ]
+}
+{% endschema %}
+
+{% javascript %}
+const container = document.querySelector('[data-section-id="{{ section.id }}"] .uglyglow-countdown__timer');
+if (container) {
+  const deadline = new Date(container.dataset.deadline).getTime();
+  const tick = () => {
+    const now = Date.now();
+    const distance = deadline - now;
+    if (distance <= 0) {
+      container.textContent = 'It\'s Glow Time!';
+      return;
+    }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    container.innerHTML = `<div><span>${days}</span><label>Days</label></div><div><span>${hours}</span><label>Hrs</label></div><div><span>${minutes}</span><label>Min</label></div><div><span>${seconds}</span><label>Sec</label></div>`;
+  };
+  tick();
+  setInterval(tick, 1000);
+}
+{% endjavascript %}
+
+{% stylesheet %}
+.uglyglow-countdown {
+  background: linear-gradient(120deg, rgba(255,46,87,0.25), rgba(0,209,178,0.2));
+  padding: clamp(3rem, 6vw, 6rem) 0;
+  color: #F5F7FA;
+}
+.uglyglow-countdown__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.uglyglow-countdown__heading {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  color: #FFD700;
+}
+.uglyglow-countdown__copy {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: #00D1B2;
+  margin: 1rem auto 2rem;
+}
+.uglyglow-countdown__timer {
+  display: inline-flex;
+  gap: 1.5rem;
+  background: rgba(26,26,26,0.85);
+  border: 2px solid rgba(255,215,0,0.4);
+  padding: 1.5rem 2.4rem;
+  border-radius: 18px;
+  font-family: 'Bangers', cursive;
+}
+.uglyglow-countdown__timer div {
+  text-align: center;
+}
+.uglyglow-countdown__timer span {
+  display: block;
+  font-size: 2.4rem;
+  color: #FFD700;
+}
+.uglyglow-countdown__timer label {
+  font-size: 0.85rem;
+  color: #F5F7FA;
+  letter-spacing: 1px;
+}
+.uglyglow-countdown__cta {
+  margin-top: 2.2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.uglyglow-countdown__subtext {
+  font-family: 'Lora', serif;
+  color: #FFD700;
+}
+{% endstylesheet %}

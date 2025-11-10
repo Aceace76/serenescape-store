@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 12,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "collapse_filters_mobile": true,
+        "color_scheme": "background-2"
+      }
+    },
+    "promo": {
+      "type": "call-to-action",
+      "settings": {
+        "heading": "Bundle & Glow",
+        "text": "Save 15% when you mix any two sweaters + matching mugs.",
+        "button_label": "Build your bundle",
+        "button_link": "shopify://pages/bundle-builder"
+      }
+    }
+  },
+  "order": ["main","promo"]
+}

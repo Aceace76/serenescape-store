@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Say hi to Jingle Jess",
+        "text": "Need fit help, shipping info, or a fresh sweater pun? Slide into our inbox and we\'ll reply within one business day.",
+        "color_scheme": "background-1"
+      }
+    },
+    "faq-link": {
+      "type": "call-to-action",
+      "settings": {
+        "heading": "Prefer instant answers?",
+        "text": "Our Glowbot has a 94% solve rate for common questions.",
+        "button_label": "Open FAQ",
+        "button_link": "shopify://pages/faq"
+      }
+    }
+  },
+  "order": ["main","faq-link"]
+}

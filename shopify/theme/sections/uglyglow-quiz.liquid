@@ -1,0 +1,213 @@
+<section class="uglyglow-quiz" data-section-id="{{ section.id }}">
+  <div class="uglyglow-quiz__inner">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.subheading }}</p>
+    <form class="uglyglow-quiz__form" data-quiz-form>
+      <div class="quiz-step is-active" data-step="1">
+        <h2>Pick your vibe</h2>
+        {% for block in section.blocks %}
+          {% if block.type == 'style' %}
+            <label class="quiz-card">
+              <input type="radio" name="style" value="{{ block.settings.value }}">
+              <span class="quiz-card__title">{{ block.settings.title }}</span>
+              <span class="quiz-card__subtitle">{{ block.settings.subtitle }}</span>
+            </label>
+          {% endif %}
+        {% endfor %}
+        <button type="button" class="button" data-next-step>Next →</button>
+      </div>
+      <div class="quiz-step" data-step="2">
+        <h2>Who are you gifting?</h2>
+        {% for block in section.blocks %}
+          {% if block.type == 'giftee' %}
+            <label class="quiz-card">
+              <input type="radio" name="giftee" value="{{ block.settings.value }}">
+              <span class="quiz-card__title">{{ block.settings.title }}</span>
+              <span class="quiz-card__subtitle">{{ block.settings.subtitle }}</span>
+            </label>
+          {% endif %}
+        {% endfor %}
+        <button type="button" class="button" data-prev-step>← Back</button>
+        <button type="button" class="button button--primary" data-next-step>Next →</button>
+      </div>
+      <div class="quiz-step" data-step="3">
+        <h2>Glow intensity</h2>
+        <div class="quiz-meter">
+          <input type="range" name="glow" min="1" max="5" value="3">
+          <div class="quiz-meter__labels">
+            <span>Subtle twinkle</span>
+            <span>Hallmark hero</span>
+          </div>
+        </div>
+        <button type="button" class="button" data-prev-step>← Back</button>
+        <button type="submit" class="button button--primary">Reveal my Ugly</button>
+      </div>
+      <div class="quiz-step quiz-result" data-step="4">
+        <h2>Your Glow Match</h2>
+        <p data-result-title></p>
+        <a class="button button--primary" data-result-link>Shop this sweater</a>
+        <a class="button button--ghost" href="{{ section.settings.collection_link }}">See all UglyGlow sweaters</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "UglyGlow Quiz",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find Your Ugly" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Answer three cheeky questions and we\'ll spill your signature glow." },
+    { "type": "url", "id": "collection_link", "label": "Fallback collection link", "default": "shopify://collections/ugly-sweaters" }
+  ],
+  "blocks": [
+    { "type": "style", "name": "Style option", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Retro Neon" },
+      { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Bright, bold and selfie-proof" },
+      { "type": "text", "id": "value", "label": "Value handle", "default": "retro-neon" }
+    ]},
+    { "type": "giftee", "name": "Giftee", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "My ride-or-die" },
+      { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "They quote Elf year-round" },
+      { "type": "text", "id": "value", "label": "Value", "default": "bff" }
+    ]}
+  ],
+  "presets": [
+    {
+      "name": "UglyGlow Quiz",
+      "blocks": [
+        { "type": "style", "settings": { "title": "Neon Chaos", "subtitle": "Lights + glitter + vibes", "value": "neon-chaos" } },
+        { "type": "style", "settings": { "title": "Vintage Cozy", "subtitle": "Grandma-core but make it glow", "value": "vintage-cozy" } },
+        { "type": "giftee", "settings": { "title": "The office crew", "subtitle": "Secret Santa slay", "value": "office" } },
+        { "type": "giftee", "settings": { "title": "Family game night", "subtitle": "Matching moment unlocked", "value": "family" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% javascript %}
+const quiz = document.querySelector('[data-section-id="{{ section.id }}"] [data-quiz-form]');
+if (quiz) {
+  const steps = quiz.querySelectorAll('.quiz-step');
+  let current = 0;
+  const showStep = index => {
+    steps[current].classList.remove('is-active');
+    current = Math.min(Math.max(index, 0), steps.length - 1);
+    steps[current].classList.add('is-active');
+    quiz.dataset.currentStep = current + 1;
+  };
+  quiz.addEventListener('click', event => {
+    const next = event.target.closest('[data-next-step]');
+    const prev = event.target.closest('[data-prev-step]');
+    if (next) {
+      event.preventDefault();
+      showStep(current + 1);
+    }
+    if (prev) {
+      event.preventDefault();
+      showStep(current - 1);
+    }
+  });
+  quiz.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = new FormData(quiz);
+    const style = data.get('style') || 'retro-neon';
+    const giftee = data.get('giftee') || 'self';
+    const glow = data.get('glow') || '3';
+    const map = {
+      'retro-neon': {
+        title: 'UglyGlow Signature Neon',
+        link: '/products/uglyglow-signature-neon',
+        threshold: '3'
+      },
+      'neon-chaos': {
+        title: 'Tinsel T-Rex',
+        link: '/products/tinsel-t-rex',
+        threshold: '4'
+      },
+      'vintage-cozy': {
+        title: 'Silent Night, Holy Lights',
+        link: '/products/silent-night-holy-lights',
+        threshold: '2'
+      }
+    };
+    const result = map[style] || map['retro-neon'];
+    quiz.querySelector('[data-result-title]').textContent = `${result.title} • Glow level ${glow}`;
+    quiz.querySelector('[data-result-link]').setAttribute('href', result.link);
+    quiz.querySelector('[data-result-link]').textContent = `Shop ${result.title}`;
+    showStep(steps.length - 1);
+  });
+}
+{% endjavascript %}
+
+{% stylesheet %}
+.uglyglow-quiz {
+  background: #1A1A1A;
+  color: #F5F7FA;
+  padding: clamp(3rem, 6vw, 6rem) 1.5rem;
+}
+.uglyglow-quiz__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.uglyglow-quiz h1 {
+  font-family: 'Bangers', cursive;
+  color: #FFD700;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+}
+.uglyglow-quiz p {
+  font-family: 'Lora', serif;
+  color: #00D1B2;
+  font-style: italic;
+}
+.quiz-step {
+  display: none;
+  margin-top: 2.4rem;
+}
+.quiz-step.is-active { display: block; }
+.quiz-card {
+  display: block;
+  background: rgba(255,46,87,0.15);
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.quiz-card:hover { border-color: rgba(255,215,0,0.6); }
+.quiz-card input { display: none; }
+.quiz-card__title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.6rem;
+  color: #FFD700;
+}
+.quiz-card__subtitle {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: #F5F7FA;
+  display: block;
+}
+.quiz-meter {
+  background: rgba(255,46,87,0.2);
+  padding: 2rem;
+  border-radius: 20px;
+}
+.quiz-meter input[type="range"] {
+  width: 100%;
+}
+.quiz-meter__labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Lora', serif;
+  color: #FFD700;
+  margin-top: 0.75rem;
+}
+.quiz-result p {
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+{% endstylesheet %}

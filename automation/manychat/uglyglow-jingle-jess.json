@@ -1,0 +1,176 @@
+{
+  "version": "v1",
+  "name": "UglyGlow Master Flow",
+  "description": "Greeting → Quiz → Product Recommendation → Abandoned Cart → Shipping Update",
+  "entry_points": [
+    {
+      "type": "keyword",
+      "keyword": "start",
+      "channel": ["facebook", "instagram", "whatsapp"],
+      "next_step": "greeting"
+    }
+  ],
+  "steps": {
+    "greeting": {
+      "type": "message",
+      "content": {
+        "text": "🎄 Hey hey, it\'s Jingle Jess from UglyGlow! Ready to find the sweater that makes Hallmark jealous?",
+        "quick_replies": [
+          {"title": "Find my ugly", "next_step": "quiz_intro"},
+          {"title": "See best sellers", "payload": "https://uglyglow.com/pages/best-sellers"},
+          {"title": "Talk to human", "next_step": "handoff"}
+        ]
+      }
+    },
+    "quiz_intro": {
+      "type": "message",
+      "content": {
+        "text": "Answer three sparkle-level questions and I\'ll match your glow in 60 seconds." },
+      "next_step": "quiz_q1"
+    },
+    "quiz_q1": {
+      "type": "message",
+      "content": {
+        "text": "What\'s the vibe?",
+        "quick_replies": [
+          {"title": "Neon chaos", "next_step": "quiz_q2", "set_attributes": {"style": "neon-chaos"}},
+          {"title": "Classic cozy", "next_step": "quiz_q2", "set_attributes": {"style": "classic"}},
+          {"title": "Office party chic", "next_step": "quiz_q2", "set_attributes": {"style": "office"}}
+        ]
+      }
+    },
+    "quiz_q2": {
+      "type": "message",
+      "content": {
+        "text": "Who\'s it for?",
+        "quick_replies": [
+          {"title": "Me (obvi)", "next_step": "quiz_q3", "set_attributes": {"giftee": "self"}},
+          {"title": "Family squad", "next_step": "quiz_q3", "set_attributes": {"giftee": "family"}},
+          {"title": "Secret Santa", "next_step": "quiz_q3", "set_attributes": {"giftee": "santa"}}
+        ]
+      }
+    },
+    "quiz_q3": {
+      "type": "message",
+      "content": {
+        "text": "Glow level from 1 (twinkle) to 5 (airport runaway):",
+        "quick_replies": [
+          {"title": "3", "next_step": "quiz_result", "set_attributes": {"glow": 3}},
+          {"title": "4", "next_step": "quiz_result", "set_attributes": {"glow": 4}},
+          {"title": "5", "next_step": "quiz_result", "set_attributes": {"glow": 5}}
+        ]
+      }
+    },
+    "quiz_result": {
+      "type": "condition",
+      "conditions": [
+        {
+          "if": "{{ style }} == 'neon-chaos'",
+          "next_step": "recommend_neon"
+        },
+        {
+          "if": "{{ giftee }} == 'family'",
+          "next_step": "recommend_kids"
+        }
+      ],
+      "default_next_step": "recommend_classic"
+    },
+    "recommend_neon": {
+      "type": "message",
+      "content": {
+        "text": "You need the ⚡️ UglyGlow Signature Neon ⚡️ – rechargeable LEDs + glow trim. Want the cart?",
+        "buttons": [
+          {"title": "Add to cart", "payload": "https://uglyglow.com/cart/add?id=UG-Signature-Neon"},
+          {"title": "Gift wrap it", "payload": "https://uglyglow.com/products/gift-wrap"},
+          {"title": "Something else", "next_step": "quiz_q1"}
+        ]
+      },
+      "next_step": "follow_up"
+    },
+    "recommend_kids": {
+      "type": "message",
+      "content": {
+        "text": "Family squad = matching moment. Grab the Kids’ Elf Vommit set + adult Tinsel T-Rex for 15% off.",
+        "buttons": [
+          {"title": "Bundle now", "payload": "https://uglyglow.com/pages/family-bundle"},
+          {"title": "Send sizing chart", "next_step": "send_sizing"}
+        ]
+      },
+      "next_step": "follow_up"
+    },
+    "recommend_classic": {
+      "type": "message",
+      "content": {
+        "text": "Silent Night, Holy Lights gives you cozy glow with removable LED strand. Should I drop it in your cart?",
+        "buttons": [
+          {"title": "Checkout link", "payload": "https://uglyglow.com/products/silent-night-holy-lights"},
+          {"title": "Need styling tips", "next_step": "send_styling"}
+        ]
+      },
+      "next_step": "follow_up"
+    },
+    "send_sizing": {
+      "type": "message",
+      "content": {
+        "text": "Sizing quickie: sweaters run true to size. Size chart: https://uglyglow.com/pages/size-guide." }
+    },
+    "send_styling": {
+      "type": "message",
+      "content": {
+        "text": "Style tip: layer over a collared shirt + pair with the Glow Beanie. Need more help? I can ping a human glow stylist.",
+        "buttons": [
+          {"title": "Ping stylist", "next_step": "handoff"}
+        ]
+      }
+    },
+    "follow_up": {
+      "type": "smart_delay",
+      "duration_minutes": 180,
+      "next_step": "abandon_check"
+    },
+    "abandon_check": {
+      "type": "condition",
+      "conditions": [
+        {
+          "if": "{{ last_checkout_status }} == 'pending'",
+          "next_step": "abandon_message"
+        }
+      ],
+      "default_next_step": "shipping_update"
+    },
+    "abandon_message": {
+      "type": "message",
+      "content": {
+        "text": "I kept your glow safe! Checkout in the next 6 hours with code GLOWBACK for free wrap: {{ last_checkout_url }}"
+      },
+      "next_step": "shipping_update"
+    },
+    "shipping_update": {
+      "type": "smart_delay",
+      "duration_minutes": 1440,
+      "next_step": "shipping_ping"
+    },
+    "shipping_ping": {
+      "type": "message",
+      "content": {
+        "text": "Shipping update! Your UglyGlow is knitting and will ship within 48 hours. Tracking will drop via email/text. Need to tweak the order? Reply \"help\"." }
+    },
+    "handoff": {
+      "type": "action",
+      "actions": [
+        {
+          "type": "notify",
+          "channel": "slack",
+          "webhook_url": "https://hooks.slack.com/services/T000/B000/uglyglow",
+          "message": "Live handoff requested by {{ user.name }} ({{ user.id }}) via {{ channel }}."
+        }
+      ],
+      "next_step": "handoff_message"
+    },
+    "handoff_message": {
+      "type": "message",
+      "content": {
+        "text": "Glowbot is flagging a human! Someone from Team UglyGlow will message you shortly." }
+    }
+  }
+}

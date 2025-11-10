@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "collapsible-content",
+      "settings": {
+        "heading": "Glow FAQs",
+        "image": null,
+        "color_scheme": "background-1"
+      },
+      "blocks": {
+        "when-ship": {"type": "collapsible_tab", "settings": {"heading": "When will my sweater ship?", "content": "Pre-orders knit within 7 business days, then ship via UPS or DHL. Tracking lands in your inbox + SMS."}},
+        "lights": {"type": "collapsible_tab", "settings": {"heading": "How do the lights work?", "content": "Each sweater includes a removable LED micro strand with USB-C rechargeable pack (4-hour glow)."}},
+        "returns": {"type": "collapsible_tab", "settings": {"heading": "What about returns?", "content": "We offer free exchanges within 60 days and instant store credit, or refunds to original payment."}},
+        "care": {"type": "collapsible_tab", "settings": {"heading": "Care instructions", "content": "Slide the LED strand out, turn inside-out, cold gentle cycle, lay flat to dry."}}
+      },
+      "block_order": ["when-ship","lights","returns","care"]
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Glow Chart Toppers",
+        "collection": "ugly-sweaters",
+        "products_to_show": 8,
+        "color_scheme": "background-1",
+        "enable_quick_add": true
+      }
+    },
+    "quiz-banner": {
+      "type": "call-to-action",
+      "settings": {
+        "heading": "Not sure which ugly?",
+        "text": "Tap into our Find Your Ugly quiz for a custom glow prescription.",
+        "button_label": "Take the quiz",
+        "button_link": "shopify://pages/quiz-find-your-ugly"
+      }
+    }
+  },
+  "order": ["main","quiz-banner"]
+}

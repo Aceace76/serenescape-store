@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Last Call to Glow</title>
+  <style>
+    body { margin:0; background:#1A1A1A; color:#F5F7FA; font-family:'Lora',serif; }
+    .wrapper { max-width:600px; margin:0 auto; padding:40px 20px; }
+    .card { background:#0F172A; border-radius:26px; border:1px solid rgba(0,209,178,0.4); padding:36px; text-align:center; }
+    h1 { font-family:'Bangers',cursive; color:#FFD700; font-size:40px; }
+    .cta { display:inline-block; padding:14px 30px; border-radius:999px; border:2px solid #FFD700; color:#FFD700; text-decoration:none; font-family:'Bangers',cursive; margin-top:24px; }
+    .deadline { margin-top:18px; font-size:14px; color:#9CA3AF; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <h1>This glow dims at midnight</h1>
+      <p>We pulled your cart out of the sleigh one more time. Use code <strong>UGLYCOMEHOME</strong> for free priority shipping—expires in 6 hours.</p>
+      <a class="cta" href="{{ event.extra.checkout_url }}">Complete Checkout</a>
+      <p class="deadline">Stock is limited. If you’re seeing this, at least one size is almost gone.</p>
+    </div>
+  </div>
+</body>
+</html>

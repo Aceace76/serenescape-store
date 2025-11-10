@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {"type": "title"},
+        "price": {"type": "price"},
+        "inventory": {"type": "inventory_status"},
+        "description": {"type": "custom_liquid", "settings": {"custom_liquid": "{% render 'glow-bullets', items: product.metafields.custom.usps | default: 'Sparkle ready,Free 60-day exchanges,Gift wrap available' | split: ',' %}"}},
+        "quantity_selector": {"type": "quantity_selector"},
+        "variant_picker": {"type": "variant_picker"},
+        "buy_buttons": {"type": "buy_buttons", "settings": {"show_dynamic_checkout": true}},
+        "gift_wrap": {"type": "custom_liquid", "settings": {"custom_liquid": "<div class=\"upsell-card\"><h3>🎁 Add Glow Wrap</h3><p>Custom neon mailer + handwritten card</p><button type=\"button\" class=\"button button--secondary\" data-upsell-product-handle=\"gift-wrap\">Add $6.99</button></div>"}},
+        "matching_mug": {"type": "custom_liquid", "settings": {"custom_liquid": "<div class=\"upsell-card\"><h3>☕ Matching Mug</h3><p>Bundle the glow mug & save 15%</p><button type=\"button\" class=\"button button--ghost\" data-upsell-product-handle=\"matching-mug\">Add $16.99</button></div>"}}
+      },
+      "block_order": ["title","price","inventory","variant_picker","quantity_selector","buy_buttons","description","gift_wrap","matching_mug"],
+      "settings": {
+        "enable_sticky_info": true,
+        "image_zoom": "lightbox",
+        "media_layout": "thumbnails"
+      }
+    },
+    "reviews": {
+      "type": "apps",
+      "settings": {
+        "include_padding": true
+      }
+    },
+    "cross-sell": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Glow with these",
+        "products_to_show": 4,
+        "show_vendor": false
+      }
+    }
+  },
+  "order": ["main","reviews","cross-sell"]
+}

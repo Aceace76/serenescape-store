@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "f53b": {"type": "uglyglow-hero"},
+    "countdown": {"type": "uglyglow-countdown"},
+    "featured_collection": {"type": "featured-collection"},
+    "reviews": {"type": "apps"},
+    "cta": {"type": "email-signup"}
+  },
+  "order": ["f53b","countdown","featured_collection","reviews","cta"]
+}
